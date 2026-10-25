@@ -57,7 +57,18 @@ public static class AntagTokenCatalog
     /// <summary>Alias kept for older references; operative uses <see cref="YaoRole"/>.</summary>
     public const string NukeopsRole = YaoRole;
 
-    public static readonly (TimeSpan Threshold, int RewardAmount)[] OnlineRewardMilestones = [];
+    /// <summary>
+    /// Coins for online time within one 24h cycle. Kept modest on purpose:
+    /// together with quests and achievements it still fits inside the monthly cap.
+    /// </summary>
+    public static readonly (TimeSpan Threshold, int RewardAmount)[] OnlineRewardMilestones =
+    [
+        (TimeSpan.FromHours(1), 1),
+        (TimeSpan.FromHours(2), 1),
+        (TimeSpan.FromHours(3), 2),
+        (TimeSpan.FromHours(5), 2),
+        (TimeSpan.FromHours(8), 2),
+    ];
 
     /// <summary>Monthly token earning cap, the same for sponsors and regular players.</summary>
     public const int MonthlyTokenCap = 100;

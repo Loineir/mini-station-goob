@@ -848,6 +848,21 @@ public sealed class MiniCCVars
         CVarDef.Create("mini.time_rewards_enabled", true, CVar.SERVERONLY | CVar.ARCHIVE);
 
     /// <summary>
+    ///     Бонусные дни: в указанные дни недели весь заработок монет (квесты, достижения,
+    ///     время онлайн, цели антагов, призы войны) умножается. Даёт повод заходить на сервер
+    ///     в конкретные дни. Список дней — номера дня недели по МСК: 0 = воскресенье ... 6 = суббота.
+    ///     Пустая строка убирает бонусные дни совсем.
+    /// </summary>
+    public static readonly CVarDef<bool> CoinBonusEnabled =
+        CVarDef.Create("mini.coin_bonus_enabled", true, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    public static readonly CVarDef<string> CoinBonusDays =
+        CVarDef.Create("mini.coin_bonus_days", "0,6", CVar.SERVERONLY | CVar.ARCHIVE);
+
+    public static readonly CVarDef<int> CoinBonusMultiplier =
+        CVarDef.Create("mini.coin_bonus_multiplier", 2, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
     ///     Разрешает всем игрокам выбирать голосовой мод на странице голосового чата, а не только
     ///     владельцам активной маски-голосоизменятеля или встроенного вокодера. По умолчанию включено:
     ///     моды это косметика, которая делает голосовой чат разнообразнее.

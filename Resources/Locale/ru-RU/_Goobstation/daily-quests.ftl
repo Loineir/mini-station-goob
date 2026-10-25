@@ -618,3 +618,39 @@ daily-quest-untouchable-legendary-desc = За раунд не получите �
 daily-quest-replace-denied-coins = Недостаточно монеток: замена задания стоит {$cost}.
 
 daily-quest-replace-success-paid = Задание заменено за {$cost} монетку.
+
+# Дефибрилляция
+daily-quest-defib-rare-name = Разряд жизни
+daily-quest-defib-rare-desc = Реанимируйте дефибриллятором {$count} игрок(а/ов).
+daily-quest-defib-superRare-name = Разряд жизни
+daily-quest-defib-superRare-desc = Реанимируйте дефибриллятором {$count} игрок(а/ов).
+daily-quest-defib-epic-name = Разряд жизни
+daily-quest-defib-epic-desc = Реанимируйте дефибриллятором {$count} игрок(а/ов).
+daily-quest-defib-mythic-name = Разряд жизни
+daily-quest-defib-mythic-desc = Реанимируйте дефибриллятором {$count} игрок(а/ов).
+daily-quest-defib-legendary-name = Разряд жизни
+daily-quest-defib-legendary-desc = Реанимируйте дефибриллятором {$count} игрок(а/ов).
+
+# Операции
+daily-quest-surgery-rare-name = Золотые руки
+daily-quest-surgery-rare-desc = Завершите {$count} шаг(а/ов) операций.
+daily-quest-surgery-superRare-name = Золотые руки
+daily-quest-surgery-superRare-desc = Завершите {$count} шаг(а/ов) операций.
+daily-quest-surgery-epic-name = Золотые руки
+daily-quest-surgery-epic-desc = Завершите {$count} шаг(а/ов) операций.
+daily-quest-surgery-mythic-name = Золотые руки
+daily-quest-surgery-mythic-desc = Завершите {$count} шаг(а/ов) операций.
+daily-quest-surgery-legendary-name = Золотые руки
+daily-quest-surgery-legendary-desc = Завершите {$count} шаг(а/ов) операций.
+
+# Питомцы
+daily-quest-pet-animals-rare-name = Друг животных
+daily-quest-pet-animals-rare-desc = Погладьте {$count} животн(ое/ых) на станции.
+daily-quest-pet-animals-superRare-name = Друг животных
+daily-quest-pet-animals-superRare-desc = Погладьте {$count} животн(ое/ых) на станции.
+daily-quest-pet-animals-epic-name = Друг животных
+daily-quest-pet-animals-epic-desc = Погладьте {$count} животн(ое/ых) на станции.
+daily-quest-pet-animals-mythic-name = Друг животных
+daily-quest-pet-animals-mythic-desc = Погладьте {$count} животн(ое/ых) на станции.
+daily-quest-pet-animals-legendary-name = Друг животных
+daily-quest-pet-animals-legendary-desc = Погладьте {$count} животн(ое/ых) на станции.

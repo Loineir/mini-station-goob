@@ -97,3 +97,21 @@ public readonly record struct EmotePerformedEvent(EntityUid User);
 /// </summary>
 [ByRefEvent]
 public readonly record struct StructureWeldedEvent(EntityUid User);
+
+/// <summary>
+/// Raised when a defibrillator successfully revives a target.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PlayerDefibrillatedEvent(EntityUid User, EntityUid Target);
+
+/// <summary>
+/// Raised when a player pets an animal (repeat petting, not the first "new friend" interaction).
+/// </summary>
+[ByRefEvent]
+public readonly record struct AnimalPettedEvent(EntityUid User, EntityUid Target);
+
+/// <summary>
+/// Raised when a player completes a surgery step (Shitmed surgeries).
+/// </summary>
+[ByRefEvent]
+public readonly record struct SurgeryStepPerformedEvent(EntityUid User, EntityUid Patient);

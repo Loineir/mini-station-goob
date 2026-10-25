@@ -7,6 +7,7 @@ using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
+using Content.Shared._Mini.DailyQuests;
 using Content.Shared._Shitmed.Spawners.EntitySystems; // Shitmed Change
 
 namespace Content.Shared.Friends.Systems;
@@ -53,6 +54,9 @@ public sealed class PettableFriendSystem : EntitySystem
             return;
 
         _popup.PopupClient(Loc.GetString(comp.FailureString, ("target", uid)), user, user);
+
+        var petEv = new AnimalPettedEvent(user, uid);
+        RaiseLocalEvent(ref petEv);
     }
 
     private void OnRehydrated(Entity<PettableFriendComponent> ent, ref GotRehydratedEvent args)

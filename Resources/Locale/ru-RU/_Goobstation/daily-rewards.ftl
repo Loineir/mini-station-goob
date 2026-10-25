@@ -42,3 +42,8 @@ daily-reward-online-hour-stage = {$hours} ч
 daily-reward-online-claimed = Получено
 daily-reward-online-reward = +{$amount}
 daily-reward-claim-result-disabled = Награды за время временно отключены. Монеты приносят еженедельные квесты и достижения.
+
+# Онлайн-милстоуны и бонусные дни
+daily-reward-window-online-time = Сегодня онлайн: {$time}
+daily-reward-milestone-chip = {$hours}ч +{$amount}
+daily-reward-window-coin-bonus = Сегодня ×{$multiplier} монеты за весь заработок! До конца: {$time}

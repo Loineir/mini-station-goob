@@ -127,7 +127,7 @@ antag-store-role-blood-cult-name = Культист крови
 antag-store-role-blood-cult-description = Очередь на раундстартовое событие культа Нар'Сi.
 
 # Server (AntagTokenSystem)
-antag-tokens-online-reward = Вы получили {$amount} билет(ов) за {$hours} ч. на сервере!
+antag-tokens-online-reward = Вы получили {$amount} монет(ы) за {$hours} ч. на сервере!
 antag-tokens-sponsor-bonus-popup = Донатерский бонус: +{$amount} билет(ов) (уровень {$tier})!
 antag-tokens-error-monthly-cap-note = Достигнут месячный лимит билетов для вашего уровня поддержки.
 antag-tokens-error-currency-not-loaded = Профиль билетов ещё не загружен.
@@ -168,3 +168,4 @@ antag-tokens-error-rule-missing-antag-selection = Событие роли нас
 antag-tokens-error-no-matching-definition = В событии не найдено подходящее описание роли.
 antag-tokens-popup-monthly-donor-bonus = Ежемесячный донатерский бонус: +{$amount} билет(ов)!
 antag-tokens-error-purchase-unavailable = Покупка недоступна.
+antag-tokens-coin-bonus-active = Бонусный день: весь заработок монет ×{$multiplier}!

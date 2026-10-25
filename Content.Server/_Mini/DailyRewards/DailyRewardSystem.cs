@@ -625,7 +625,9 @@ public sealed class DailyRewardSystem : EntitySystem
             onlineElapsed,
             onlineGranted,
             _dailyQuests.BuildQuestEntries(session),
-            _timeRewardsEnabled)), session);
+            _timeRewardsEnabled,
+            _antagTokens.GetCoinBonusMultiplier(),
+            _antagTokens.GetCoinBonusTimeLeft())), session);
     }
 
     private RewardDefinition GetRewardPreview(DailyRewardComponent component, int day)

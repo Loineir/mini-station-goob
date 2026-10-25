@@ -125,6 +125,9 @@ public sealed class DailyQuestSystem : EntitySystem
         SubscribeLocalEvent<CargoBountyFulfilledEvent>(OnCargoBountyFulfilled);
         SubscribeLocalEvent<StructureWeldedEvent>(OnStructureWelded);
         SubscribeLocalEvent<MiningPointsClaimedEvent>(OnMiningPointsClaimed);
+        SubscribeLocalEvent<PlayerDefibrillatedEvent>(OnPlayerDefibrillated);
+        SubscribeLocalEvent<SurgeryStepPerformedEvent>(OnSurgeryStepPerformed);
+        SubscribeLocalEvent<AnimalPettedEvent>(OnAnimalPetted);
         SubscribeLocalEvent<BankBalanceUpdatedEvent>(OnBankBalanceUpdated);
 
         _userDb.AddOnLoadPlayer(LoadPlayerData);
@@ -585,6 +588,9 @@ public sealed class DailyQuestSystem : EntitySystem
             DailyQuestType.KillHostiles => "JobIconSecurityOfficer",
             DailyQuestType.RepairStructures => "JobIconStationEngineer",
             DailyQuestType.EarnStationBankBalance => "JobIconQuarterMaster",
+            DailyQuestType.DefibrillatePatients => "JobIconMedicalDoctor",
+            DailyQuestType.PerformSurgeries => "JobIconSurgeon",
+            DailyQuestType.PetAnimals => "JobIconZookeeper",
             _ => "JobIconUnknown",
         };
     }
@@ -602,6 +608,24 @@ public sealed class DailyQuestSystem : EntitySystem
             uniquePlayerId = mind.UserId.Value.UserId;
 
         TryIncrement(args.User, DailyQuestType.HealOthers, 1, uniquePlayerId);
+    }
+
+    private void OnPlayerDefibrillated(ref PlayerDefibrillatedEvent args)
+    {
+        if (args.User == args.Target)
+            return;
+
+        TryIncrement(args.User, DailyQuestType.DefibrillatePatients);
+    }
+
+    private void OnSurgeryStepPerformed(ref SurgeryStepPerformedEvent args)
+    {
+        TryIncrement(args.User, DailyQuestType.PerformSurgeries);
+    }
+
+    private void OnAnimalPetted(ref AnimalPettedEvent args)
+    {
+        TryIncrement(args.User, DailyQuestType.PetAnimals);
     }
 
     private void OnPaperStamped(Entity<PaperComponent> ent, ref PaperStampedEvent args)

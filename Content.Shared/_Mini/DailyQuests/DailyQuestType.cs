@@ -25,4 +25,7 @@ public enum DailyQuestType : byte
     RepairStructures,
     SurviveRound,
     EarnStationBankBalance,
+    DefibrillatePatients,
+    PerformSurgeries,
+    PetAnimals,
 }

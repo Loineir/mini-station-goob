@@ -28,7 +28,9 @@ public sealed class DailyRewardUpdateMessage(
     TimeSpan onlineElapsed,
     List<TimeSpan> onlineGrantedThresholds,
     List<DailyQuestEntry> dailyQuests,
-    bool timeRewardsEnabled) : BoundUserInterfaceState
+    bool timeRewardsEnabled,
+    int coinBonusMultiplier = 1,
+    TimeSpan coinBonusTimeLeft = default) : BoundUserInterfaceState
 {
     public int CurrentStreak { get; private set; } = currentStreak;
     public int NextRewardDay { get; private set; } = nextRewardDay;
@@ -45,6 +47,10 @@ public sealed class DailyRewardUpdateMessage(
     public List<DailyQuestEntry> DailyQuests { get; private set; } = dailyQuests;
     /// <summary>False while time-based rewards (daily streak, playtime) are temporarily disabled.</summary>
     public bool TimeRewardsEnabled { get; private set; } = timeRewardsEnabled;
+    /// <summary>Bonus-day multiplier for earned coins; 1 when there is no bonus today.</summary>
+    public int CoinBonusMultiplier { get; private set; } = coinBonusMultiplier;
+    /// <summary>Time left until the end of the current bonus day; zero when there is no bonus today.</summary>
+    public TimeSpan CoinBonusTimeLeft { get; private set; } = coinBonusTimeLeft;
 }
 
 [Serializable, NetSerializable]

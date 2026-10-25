@@ -78,6 +78,39 @@ public sealed class DailyRewardWindow : DefaultWindow
     private Label? _currentRewardTimerLabel;
     private TextureRect? _currentRewardTimerIcon;
 
+    private readonly Label _onlineTimeLabel = new()
+    {
+        Modulate = Color.FromHex("#9fb4d8"),
+        VerticalAlignment = VAlignment.Center
+    };
+    private readonly BoxContainer _milestoneRow = new()
+    {
+        Orientation = LayoutOrientation.Horizontal,
+        SeparationOverride = 6
+    };
+    private readonly List<PanelContainer> _milestoneChips = new();
+    private readonly List<Label> _milestoneChipLabels = new();
+    private readonly PanelContainer _bonusBanner = new()
+    {
+        Visible = false,
+        HorizontalExpand = true,
+        PanelOverride = new StyleBoxFlat
+        {
+            BackgroundColor = Color.FromHex("#2a2410"),
+            BorderColor = Color.FromHex("#c9a23f"),
+            BorderThickness = new Thickness(1),
+            ContentMarginLeftOverride = 10,
+            ContentMarginTopOverride = 5,
+            ContentMarginRightOverride = 10,
+            ContentMarginBottomOverride = 5
+        }
+    };
+    private readonly Label _bonusBannerLabel = new()
+    {
+        HorizontalAlignment = HAlignment.Center,
+        Modulate = Color.FromHex("#f2d27c")
+    };
+
     /// <summary>Status line under the claim button: shows why the claim worked or was rejected.</summary>
     private readonly Label _claimStatusLabel = new()
     {
@@ -155,6 +188,7 @@ public sealed class DailyRewardWindow : DefaultWindow
             VerticalExpand = true,
             Margin = new Thickness(4),
         };
+        questsTab.AddChild(_bonusBanner);
         questsTab.AddChild(heroSection);
 
         _questSectionLabel = new Label
@@ -422,10 +456,12 @@ public sealed class DailyRewardWindow : DefaultWindow
             currentActiveTime,
             _state.RequiredActiveTime,
             _state.Rewards,
-            _state.OnlineElapsed,
+            _state.OnlineElapsed + elapsed,
             _state.OnlineGrantedThresholds,
             _state.DailyQuests,
-            _state.TimeRewardsEnabled);
+            _state.TimeRewardsEnabled,
+            _state.CoinBonusMultiplier,
+            MaxZero(_state.CoinBonusTimeLeft - elapsed));
 
         UpdateActiveTimerUi(derived);
         UpdateCurrentRewardTimerUi(derived);
@@ -599,7 +635,59 @@ public sealed class DailyRewardWindow : DefaultWindow
                 : "daily-reward-window-claim-locked");
         }
 
+        UpdateMilestoneUi(state);
+        UpdateBonusBanner(state);
+
         UpdateCurrentRewardTimerUi(state);
+    }
+
+    /// <summary>
+    /// Online-time milestone chips: granted milestones light up, the next one is highlighted.
+    /// The elapsed online time comes from the last snapshot plus wall-clock extrapolation.
+    /// </summary>
+    private void UpdateMilestoneUi(DailyRewardUpdateMessage state)
+    {
+        if (_milestoneChips.Count == 0)
+            return;
+
+        _onlineTimeLabel.Text = Loc.GetString("daily-reward-window-online-time",
+            ("time", FormatCooldown(state.OnlineElapsed)));
+
+        for (var i = 0; i < AntagTokenCatalog.OnlineRewardMilestones.Length && i < _milestoneChips.Count; i++)
+        {
+            var (threshold, _) = AntagTokenCatalog.OnlineRewardMilestones[i];
+            var granted = state.OnlineGrantedThresholds.Contains(threshold);
+            // Milestones fill sequentially by online time, so "next" is the first chip
+            // whose predecessor is already granted.
+            var previousGranted = i == 0
+                || state.OnlineGrantedThresholds.Contains(AntagTokenCatalog.OnlineRewardMilestones[i - 1].Threshold);
+
+            var (background, border, text) = granted
+                ? (PurchasedCardColor, Color.FromHex("#4a7a5c"), Color.FromHex("#9fd4ae"))
+                : previousGranted
+                    ? (Color.FromHex("#1c1a2a"), AccentColor, Color.White)
+                    : (Color.FromHex("#0f1725"), Color.FromHex("#455674"), Color.FromHex("#7f8da6"));
+
+            if (_milestoneChips[i].PanelOverride is StyleBoxFlat style)
+            {
+                style.BackgroundColor = background;
+                style.BorderColor = border;
+            }
+
+            _milestoneChipLabels[i].Modulate = text;
+        }
+    }
+
+    private void UpdateBonusBanner(DailyRewardUpdateMessage state)
+    {
+        var active = state.CoinBonusMultiplier > 1;
+        _bonusBanner.Visible = active;
+        if (!active)
+            return;
+
+        _bonusBannerLabel.Text = Loc.GetString("daily-reward-window-coin-bonus",
+            ("multiplier", state.CoinBonusMultiplier),
+            ("time", FormatCooldown(state.CoinBonusTimeLeft)));
     }
 
     private void UpdateCurrentRewardTimerUi(DailyRewardUpdateMessage state)
@@ -998,6 +1086,53 @@ public sealed class DailyRewardWindow : DefaultWindow
             VerticalAlignment = VAlignment.Center
         };
         infoRow.AddChild(CreateIconLabelRow(_clockTexture, activeProgressLabel));
+
+        var onlineRow = new BoxContainer
+        {
+            Orientation = LayoutOrientation.Horizontal,
+            SeparationOverride = 12
+        };
+        content.AddChild(onlineRow);
+
+        onlineRow.AddChild(_onlineTimeLabel);
+        onlineRow.AddChild(_milestoneRow);
+
+        foreach (var (threshold, rewardAmount) in AntagTokenCatalog.OnlineRewardMilestones)
+        {
+            var chipLabel = new Label
+            {
+                Text = Loc.GetString("daily-reward-milestone-chip",
+                    ("hours", (int) threshold.TotalHours),
+                    ("amount", rewardAmount)),
+                StyleClasses = { "LabelSmall" },
+                VerticalAlignment = VAlignment.Center
+            };
+
+            var chip = new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = Color.FromHex("#0f1725"),
+                    BorderColor = Color.FromHex("#455674"),
+                    BorderThickness = new Thickness(1),
+                    ContentMarginLeftOverride = 8,
+                    ContentMarginTopOverride = 2,
+                    ContentMarginRightOverride = 8,
+                    ContentMarginBottomOverride = 2
+                }
+            };
+            chip.AddChild(chipLabel);
+
+            _milestoneRow.AddChild(chip);
+            _milestoneChips.Add(chip);
+            _milestoneChipLabels.Add(chipLabel);
+        }
+
+        if (_milestoneChips.Count == 0)
+        {
+            _onlineTimeLabel.Visible = false;
+            _milestoneRow.Visible = false;
+        }
 
         activeProgressBar = new PixelTiledProgressBar();
         content.AddChild(activeProgressBar);

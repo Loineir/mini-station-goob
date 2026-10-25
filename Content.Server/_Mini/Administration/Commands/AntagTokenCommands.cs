@@ -104,7 +104,8 @@ public sealed class AntagTokenAddCommand : IConsoleCommand
         }
 
         var system = _entities.System<AntagTokenSystem>();
-        if (!system.AddBalance(session.UserId, amount, out var granted, out var note))
+        // Admin grants are exact amounts: bonus days only apply to what players earn themselves.
+        if (!system.AddBalance(session.UserId, amount, out var granted, out var note, applyBonus: false))
         {
             shell.WriteError("Failed to add balance.");
             return;

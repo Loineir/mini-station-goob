@@ -16,6 +16,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared._Mini.DailyQuests;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
@@ -281,5 +282,12 @@ public sealed class DefibrillatorSystem : EntitySystem
         // TODO clean up this clown show above
         var ev = new TargetDefibrillatedEvent(user, (uid, component));
         RaiseLocalEvent(target, ref ev);
+
+        // Quest hook: count only successful revivals of a player with a mind.
+        if (!dead && session != null)
+        {
+            var questEv = new PlayerDefibrillatedEvent(user, target);
+            RaiseLocalEvent(ref questEv);
+        }
     }
 }

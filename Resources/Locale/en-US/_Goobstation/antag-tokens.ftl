@@ -115,7 +115,7 @@ antag-store-role-wraith-name = Wraith
 antag-store-role-wraith-description = A Wraith ghost role.
 
 # Server (AntagTokenSystem)
-antag-tokens-online-reward = You received {$amount} ticket(s) for {$hours} hours on the server!
+antag-tokens-online-reward = You received {$amount} coin(s) for {$hours} hours on the server!
 antag-tokens-sponsor-bonus-popup = Sponsor bonus: +{$amount} tickets (tier {$tier})!
 antag-tokens-error-monthly-cap-note = Monthly ticket cap reached for your support tier.
 antag-tokens-error-currency-not-loaded = Your ticket profile has not loaded yet.
@@ -156,3 +156,4 @@ antag-tokens-error-rule-missing-antag-selection = This role's event is misconfig
 antag-tokens-error-no-matching-definition = No matching role definition was found in this event.
 antag-tokens-popup-monthly-donor-bonus = Monthly donor bonus: +{$amount} tickets!
 antag-tokens-error-purchase-unavailable = Purchase unavailable.
+antag-tokens-coin-bonus-active = Bonus day: all coin earnings ×{$multiplier} today!

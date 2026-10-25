@@ -96,6 +96,8 @@ public sealed class AntagTokenSystem : EntitySystem
     private const int SharedTokenSlotsPlayersPerSlot = 8;
     private bool _enforcingSharedTokenSlotCapacity;
     private readonly Dictionary<string, int> _ghostMinimumTimeRandomBonusByRole = new();
+    private string? _coinBonusDaysRaw;
+    private HashSet<int>? _coinBonusDaysCache;
     private static readonly HashSet<string> BlockedRoundstartRolePresets = new(StringComparer.OrdinalIgnoreCase)
     {
         "Extended",
@@ -129,6 +131,7 @@ public sealed class AntagTokenSystem : EntitySystem
 
         SubscribeLocalEvent<AntagSelectionComponent, AntagSelectionExcludeSessionEvent>(OnExcludeReservedSession);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnJoinedLobby);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnRulePlayerSpawning, before: new[] { typeof(AntagSelectionSystem) });
         SubscribeLocalEvent<RulePlayerJobsPreSpawnEvent>(OnJobsAssignedPreSpawn);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnRoundstartJobsAssigned, after: new[] { typeof(AntagSelectionSystem) });
@@ -214,13 +217,74 @@ public sealed class AntagTokenSystem : EntitySystem
         }
     }
 
-    public bool AddBalance(NetUserId userId, int amount, out int grantedAmount, out string? note)
+    /// <summary>
+    /// Bonus-day multiplier for earned coins (quests, achievements, online time, objectives).
+    /// 1 means there is no bonus right now. The day is taken in MSK, the same timezone
+    /// the weekly quest reset uses.
+    /// </summary>
+    public int GetCoinBonusMultiplier()
+    {
+        if (!_cfg.GetCVar(MiniCCVars.CoinBonusEnabled))
+            return 1;
+
+        var multiplier = _cfg.GetCVar(MiniCCVars.CoinBonusMultiplier);
+        if (multiplier <= 1)
+            return 1;
+
+        var days = GetCoinBonusDays();
+        if (days.Count == 0 || !days.Contains(GetMoscowDayOfWeek()))
+            return 1;
+
+        return multiplier;
+    }
+
+    /// <summary>Time left until the end of the current bonus day (MSK midnight); zero when there is no bonus right now.</summary>
+    public TimeSpan GetCoinBonusTimeLeft()
+    {
+        if (GetCoinBonusMultiplier() <= 1)
+            return TimeSpan.Zero;
+
+        var moscowNow = DateTime.UtcNow.AddHours(3);
+        return moscowNow.Date.AddDays(1) - moscowNow;
+    }
+
+    private HashSet<int> GetCoinBonusDays()
+    {
+        var raw = _cfg.GetCVar(MiniCCVars.CoinBonusDays);
+        if (string.IsNullOrWhiteSpace(raw))
+            return [];
+
+        if (_coinBonusDaysRaw == raw && _coinBonusDaysCache != null)
+            return _coinBonusDaysCache;
+
+        var days = new HashSet<int>();
+        foreach (var part in raw.Split(','))
+        {
+            if (int.TryParse(part.Trim(), out var day) && day is >= 0 and <= 6)
+                days.Add(day);
+        }
+
+        _coinBonusDaysRaw = raw;
+        _coinBonusDaysCache = days;
+        return days;
+    }
+
+    private static int GetMoscowDayOfWeek()
+    {
+        return (int) DateTime.UtcNow.AddHours(3).DayOfWeek;
+    }
+
+    public bool AddBalance(NetUserId userId, int amount, out int grantedAmount, out string? note, bool applyBonus = true)
     {
         grantedAmount = 0;
         note = null;
 
         if (amount <= 0)
             return false;
+
+        // Bonus days multiply everything earned, but never touch spending or PayBalance payouts.
+        if (applyBonus)
+            amount *= GetCoinBonusMultiplier();
 
         var state = EnsureStateExists(userId);
         if (state == null)
@@ -1134,6 +1198,15 @@ public sealed class AntagTokenSystem : EntitySystem
         var now = DateTime.UtcNow;
         _onlineRewards.TryAdd(ev.PlayerSession.UserId, new OnlineRewardState());
         _onlineRewards[ev.PlayerSession.UserId].Resume(now);
+    }
+
+    private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
+    {
+        var multiplier = GetCoinBonusMultiplier();
+        if (multiplier <= 1)
+            return;
+
+        ShowPopup(ev.Player, Loc.GetString("antag-tokens-coin-bonus-active", ("multiplier", multiplier)));
     }
 
     internal void TestSetLastDonorBonusClaimUtc(NetUserId userId, DateTime? utc)

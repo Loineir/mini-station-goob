@@ -1884,3 +1884,129 @@
   targetCount: 1
   minRoundPlaytime: 2400
 
+
+# Дефибрилляция: успешная реанимация игроков
+
+- type: dailyQuest
+  id: DefibRare
+  rarity: rare
+  questType: DefibrillatePatients
+  name: daily-quest-defib-rare-name
+  description: daily-quest-defib-rare-desc
+  targetCount: 1
+
+- type: dailyQuest
+  id: DefibSuperRare
+  rarity: superRare
+  questType: DefibrillatePatients
+  name: daily-quest-defib-superRare-name
+  description: daily-quest-defib-superRare-desc
+  targetCount: 2
+
+- type: dailyQuest
+  id: DefibEpic
+  rarity: epic
+  questType: DefibrillatePatients
+  name: daily-quest-defib-epic-name
+  description: daily-quest-defib-epic-desc
+  targetCount: 2
+
+- type: dailyQuest
+  id: DefibMythic
+  rarity: mythic
+  questType: DefibrillatePatients
+  name: daily-quest-defib-mythic-name
+  description: daily-quest-defib-mythic-desc
+  targetCount: 3
+
+- type: dailyQuest
+  id: DefibLegendary
+  rarity: legendary
+  questType: DefibrillatePatients
+  name: daily-quest-defib-legendary-name
+  description: daily-quest-defib-legendary-desc
+  targetCount: 4
+
+# Операции: завершённые шаги хирургии (Shitmed)
+
+- type: dailyQuest
+  id: SurgeryRare
+  rarity: rare
+  questType: PerformSurgeries
+  name: daily-quest-surgery-rare-name
+  description: daily-quest-surgery-rare-desc
+  targetCount: 2
+
+- type: dailyQuest
+  id: SurgerySuperRare
+  rarity: superRare
+  questType: PerformSurgeries
+  name: daily-quest-surgery-superRare-name
+  description: daily-quest-surgery-superRare-desc
+  targetCount: 3
+
+- type: dailyQuest
+  id: SurgeryEpic
+  rarity: epic
+  questType: PerformSurgeries
+  name: daily-quest-surgery-epic-name
+  description: daily-quest-surgery-epic-desc
+  targetCount: 5
+
+- type: dailyQuest
+  id: SurgeryMythic
+  rarity: mythic
+  questType: PerformSurgeries
+  name: daily-quest-surgery-mythic-name
+  description: daily-quest-surgery-mythic-desc
+  targetCount: 7
+
+- type: dailyQuest
+  id: SurgeryLegendary
+  rarity: legendary
+  questType: PerformSurgeries
+  name: daily-quest-surgery-legendary-name
+  description: daily-quest-surgery-legendary-desc
+  targetCount: 10
+
+# Питомцы: повторные поглаживания животных
+
+- type: dailyQuest
+  id: PetAnimalsRare
+  rarity: rare
+  questType: PetAnimals
+  name: daily-quest-pet-animals-rare-name
+  description: daily-quest-pet-animals-rare-desc
+  targetCount: 3
+
+- type: dailyQuest
+  id: PetAnimalsSuperRare
+  rarity: superRare
+  questType: PetAnimals
+  name: daily-quest-pet-animals-superRare-name
+  description: daily-quest-pet-animals-superRare-desc
+  targetCount: 5
+
+- type: dailyQuest
+  id: PetAnimalsEpic
+  rarity: epic
+  questType: PetAnimals
+  name: daily-quest-pet-animals-epic-name
+  description: daily-quest-pet-animals-epic-desc
+  targetCount: 8
+
+- type: dailyQuest
+  id: PetAnimalsMythic
+  rarity: mythic
+  questType: PetAnimals
+  name: daily-quest-pet-animals-mythic-name
+  description: daily-quest-pet-animals-mythic-desc
+  targetCount: 10
+
+- type: dailyQuest
+  id: PetAnimalsLegendary
+  rarity: legendary
+  questType: PetAnimals
+  name: daily-quest-pet-animals-legendary-name
+  description: daily-quest-pet-animals-legendary-desc
+  targetCount: 12

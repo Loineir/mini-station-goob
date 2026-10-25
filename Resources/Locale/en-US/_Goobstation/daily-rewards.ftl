@@ -42,3 +42,8 @@ daily-reward-online-hour-stage = {$hours} h
 daily-reward-online-claimed = Claimed
 daily-reward-online-reward = +{$amount}
 daily-reward-claim-result-disabled = Time-based rewards are temporarily disabled. Weekly quests and achievements still bring coins.
+
+# Online-time milestones and bonus days
+daily-reward-window-online-time = Online today: {$time}
+daily-reward-milestone-chip = {$hours}h +{$amount}
+daily-reward-window-coin-bonus = Coins earned today at ×{$multiplier}! Ends in: {$time}

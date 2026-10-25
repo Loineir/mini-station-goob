@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Shared._Mini.DailyQuests;
 using Content.Shared._Orion.CorticalBorer;
 using Content.Shared._Orion.CorticalBorer.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Conditions;
@@ -187,6 +188,12 @@ public abstract partial class SharedSurgerySystem : EntitySystem
         var ev = new SurgeryStepEvent(args.User, ent, part, tool, surgery, step, complete);
         RaiseLocalEvent(step, ref ev);
         RaiseLocalEvent(args.User, ref ev);
+
+        if (complete)
+        {
+            var questEv = new SurgeryStepPerformedEvent(args.User, ent);
+            RaiseLocalEvent(ref questEv);
+        }
 
         // consume the tool if it's something like using LV cable as stitches
         if (args.ToolUsed)

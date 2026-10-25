@@ -618,3 +618,39 @@ daily-quest-untouchable-legendary-desc = Take no damage during the round. Requir
 daily-quest-replace-denied-coins = Not enough coins: replacing a quest costs {$cost}.
 
 daily-quest-replace-success-paid = Quest replaced for {$cost} coin.
+
+# Defibrillation
+daily-quest-defib-rare-name = Life shock
+daily-quest-defib-rare-desc = Defibrillate {$count} player(s) back to life.
+daily-quest-defib-superRare-name = Life shock
+daily-quest-defib-superRare-desc = Defibrillate {$count} player(s) back to life.
+daily-quest-defib-epic-name = Life shock
+daily-quest-defib-epic-desc = Defibrillate {$count} player(s) back to life.
+daily-quest-defib-mythic-name = Life shock
+daily-quest-defib-mythic-desc = Defibrillate {$count} player(s) back to life.
+daily-quest-defib-legendary-name = Life shock
+daily-quest-defib-legendary-desc = Defibrillate {$count} player(s) back to life.
+
+# Surgery
+daily-quest-surgery-rare-name = Steady hands
+daily-quest-surgery-rare-desc = Complete {$count} surgery step(s).
+daily-quest-surgery-superRare-name = Steady hands
+daily-quest-surgery-superRare-desc = Complete {$count} surgery step(s).
+daily-quest-surgery-epic-name = Steady hands
+daily-quest-surgery-epic-desc = Complete {$count} surgery step(s).
+daily-quest-surgery-mythic-name = Steady hands
+daily-quest-surgery-mythic-desc = Complete {$count} surgery step(s).
+daily-quest-surgery-legendary-name = Steady hands
+daily-quest-surgery-legendary-desc = Complete {$count} surgery step(s).
+
+# Pets
+daily-quest-pet-animals-rare-name = Animal friend
+daily-quest-pet-animals-rare-desc = Pet {$count} animal(s) on the station.
+daily-quest-pet-animals-superRare-name = Animal friend
+daily-quest-pet-animals-superRare-desc = Pet {$count} animal(s) on the station.
+daily-quest-pet-animals-epic-name = Animal friend
+daily-quest-pet-animals-epic-desc = Pet {$count} animal(s) on the station.
+daily-quest-pet-animals-mythic-name = Animal friend
+daily-quest-pet-animals-mythic-desc = Pet {$count} animal(s) on the station.
+daily-quest-pet-animals-legendary-name = Animal friend
+daily-quest-pet-animals-legendary-desc = Pet {$count} animal(s) on the station.
