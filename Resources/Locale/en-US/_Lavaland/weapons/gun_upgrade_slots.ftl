@@ -9,4 +9,5 @@ weapon-upgrade-slot-name-fifth = Fifth upgrade slot
 weapon-upgrade-slot-name-main = Main upgrade
 weapon-upgrade-slot-name-blade = Blade upgrade
 weapon-upgrade-slot-name-handle = Handle upgrade
+weapon-upgrade-slot-name-trophy = Trophy
 weapon-upgrade-slot-name-special = Special upgrade

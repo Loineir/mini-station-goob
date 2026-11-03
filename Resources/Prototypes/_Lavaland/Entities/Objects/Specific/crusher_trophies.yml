@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Shared parent for megafauna trophies that can be fitted into a crusher.
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseLavalandCrusherTrophy
+  components:
+  - type: Tag
+    tags:
+    - CrusherTrophy
+  - type: StaticPrice
+    price: 500

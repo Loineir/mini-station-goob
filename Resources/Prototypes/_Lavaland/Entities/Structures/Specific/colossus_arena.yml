@@ -35,10 +35,17 @@
 # Crusher trophy
 - type: entity
   id: LavalandBlasterTubes
-  parent: BaseItem
+  parent: BaseLavalandCrusherTrophy
   name: blaster tubes
   description: Trophy tubes taken from a colossus.
   components:
   - type: Sprite
     sprite: _Lavaland/Objects/Specific/trophies.rsi
     state: blaster_tubes
+  - type: ItemUpgrade
+    name: crusher-trophy-blaster-tubes-name
+    uniqueGroup: crusherTrophy
+  # shortcut: TG lets the crusher fire during its melee cooldown, this only cuts shot recharge time.
+  - type: GunUpgradeFireRate
+    coefficient: 2
+  - type: CrusherTrophy
